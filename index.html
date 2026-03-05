@@ -28,19 +28,22 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="mobile-web-app-capable" content="yes" />
   
-  <!-- Prevent theme flashing by setting the dark class immediately -->
+  <!-- Prevent theme flashing by setting dark class and data-theme immediately -->
   <script>
     (function() {
-      // Get stored theme or use system preference
-      const stored = localStorage.getItem('app_theme');
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      // Determine if we should use dark mode
-      const shouldBeDark = stored === 'dark' || (stored !== 'light' && systemDark);
-      
-      // Apply dark class immediately if needed
+      var stored = localStorage.getItem('app_theme');
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var darkThemes = { dark: 1, void: 1, carbon: 1 };
+      var themedVariants = { frost: 1, dawn: 1, void: 1, carbon: 1 };
+
+      // Determine if dark mode
+      var shouldBeDark = stored in darkThemes || (!(stored === 'light' || stored === 'frost' || stored === 'dawn') && systemDark);
+
       if (shouldBeDark) {
         document.documentElement.classList.add('dark');
+      }
+      if (stored in themedVariants) {
+        document.documentElement.setAttribute('data-theme', stored);
       }
     })();
   </script>

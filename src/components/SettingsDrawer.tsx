@@ -24,10 +24,14 @@ interface SettingsDrawerProps {
   onClose: () => void;
 }
 
-const themeOptions: { value: Theme; label: string }[] = [
+const themeOptions: { value: Theme; label: string; swatch?: [string, string] }[] = [
   { value: 'system', label: 'System' },
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
+  { value: 'light', label: 'Light', swatch: ['#fafafa', '#3b82f6'] },
+  { value: 'dark', label: 'Dark', swatch: ['#0a0a0a', '#3b82f6'] },
+  { value: 'frost', label: 'Frost', swatch: ['#f0f4f8', '#38bdf8'] },
+  { value: 'dawn', label: 'Dawn', swatch: ['#faf8f5', '#f59e0b'] },
+  { value: 'void', label: 'Void', swatch: ['#07060e', '#22d3ee'] },
+  { value: 'carbon', label: 'Carbon', swatch: ['#080c08', '#10b981'] },
 ];
 
 const layoutOptions: { value: LayoutMode; label: string; description?: string }[] = [
@@ -609,12 +613,33 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
               isOpen={openSection === 'general'}
               onClick={() => toggleSection('general')}
             >
-              <Select 
-                label="Theme" 
-                value={theme} 
-                onChange={setTheme} 
-                options={themeOptions} 
-              />
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Theme</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {themeOptions.map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => setTheme(opt.value)}
+                      className={`flex flex-col items-center gap-1.5 p-2.5 rounded-lg border transition-colors ${
+                        theme === opt.value
+                          ? 'border-blue-500 bg-blue-500/10'
+                          : 'border-neutral-300/50 dark:border-neutral-700/50 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50'
+                      }`}
+                    >
+                      {opt.swatch ? (
+                        <span
+                          className="w-6 h-6 rounded-full border border-neutral-300/50 dark:border-neutral-600/50 shrink-0"
+                          style={{ background: `linear-gradient(135deg, ${opt.swatch[0]} 50%, ${opt.swatch[1]} 50%)` }}
+                        />
+                      ) : (
+                        <span className="w-6 h-6 rounded-full border border-neutral-300/50 dark:border-neutral-600/50 shrink-0 bg-gradient-to-br from-neutral-100 to-neutral-800" />
+                      )}
+                      <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
               {backgroundPacks.length > 0 && (
                 <Select 
                   label="Background" 

@@ -2,13 +2,14 @@ import { useState, useEffect, useLayoutEffect } from 'react';
 import type { ReactNode } from 'react';
 import { ThemeContext } from './ThemeContext';
 import type { Theme, ThemeContextType } from './ThemeContext';
+import { THEME_MODE, VALID_THEMES } from './ThemeContext';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   // Initialize theme from localStorage or system preference
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'system';
     const stored = localStorage.getItem('app_theme');
-    return stored === 'light' || stored === 'dark' ? (stored as Theme) : 'system';
+    return VALID_THEMES.includes(stored as Theme) ? (stored as Theme) : 'system';
   });
 
   // Track real system preference
@@ -25,17 +26,29 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Determine effective dark state
-  const isDark = theme === 'dark' || (theme === 'system' && systemPref);
+  const isDark = theme === 'system'
+    ? systemPref
+    : THEME_MODE[theme] === 'dark';
 
-  // Apply the class and persist explicit choices
+  // Apply the class, data-theme attribute, and persist explicit choices
   useLayoutEffect(() => {
-    // Check if the class is already correctly set (from our blocking script)
-    const currentlyDark = document.documentElement.classList.contains('dark');
-    
+    const html = document.documentElement;
+
+    // Toggle dark class
+    const currentlyDark = html.classList.contains('dark');
     if (currentlyDark !== isDark) {
-      document.documentElement.classList.toggle('dark', isDark);
+      html.classList.toggle('dark', isDark);
     }
-    
+
+    // Set data-theme for themed variants, remove for original light/dark/system
+    const themedVariants: Theme[] = ['frost', 'dawn', 'void', 'carbon'];
+    if (themedVariants.includes(theme)) {
+      html.setAttribute('data-theme', theme);
+    } else {
+      html.removeAttribute('data-theme');
+    }
+
+    // Persist
     if (theme === 'system') {
       localStorage.removeItem('app_theme');
     } else {

@@ -130,10 +130,135 @@ button[data-headlessui-state]:disabled,
 }
 
 @keyframes typing {
-  from { 
+  from {
     width: 0;
   }
-  to { 
+  to {
     width: 100%;
   }
+}
+
+/* ============ THEMED VARIANTS ============ */
+/* Override Tailwind's neutral-* and blue-* CSS variables via data-theme selectors.
+   This makes all existing dark: and neutral-/blue- classes work automatically. */
+
+/* Frost (Light) - Cool blue-gray tints, icy sky-blue accents */
+[data-theme="frost"] {
+  --color-neutral-50: #f0f4f8;
+  --color-neutral-100: #e2e8f0;
+  --color-neutral-200: #cbd5e1;
+  --color-neutral-300: #a8b8cc;
+  --color-neutral-400: #7c8db5;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  --color-blue-400: #38bdf8;
+  --color-blue-500: #0ea5e9;
+  --color-blue-600: #0284c7;
+}
+
+/* Dawn (Light) - Warm ivory/cream backgrounds, amber/gold accents */
+[data-theme="dawn"] {
+  --color-neutral-50: #faf8f5;
+  --color-neutral-100: #f5efe6;
+  --color-neutral-200: #e8dfd3;
+  --color-neutral-300: #c8bba8;
+  --color-neutral-400: #a89880;
+  --color-neutral-500: #8a7a65;
+  --color-neutral-600: #6b5c4d;
+  --color-neutral-700: #4d3f32;
+  --color-neutral-800: #302818;
+  --color-neutral-900: #1a150e;
+  --color-neutral-950: #0d0a06;
+
+  --color-blue-400: #fbbf24;
+  --color-blue-500: #f59e0b;
+  --color-blue-600: #d97706;
+}
+
+/* Void (Dark) - Deep indigo-purple blacks, cyan glow accents */
+[data-theme="void"] {
+  --color-neutral-50: #e8e7f8;
+  --color-neutral-100: #d0cee8;
+  --color-neutral-200: #b0add8;
+  --color-neutral-300: #9b98c8;
+  --color-neutral-400: #8280b8;
+  --color-neutral-500: #6b68a8;
+  --color-neutral-600: #4a4880;
+  --color-neutral-700: #2d2b58;
+  --color-neutral-800: #171530;
+  --color-neutral-900: #0e0d1a;
+  --color-neutral-950: #07060e;
+
+  --color-blue-400: #22d3ee;
+  --color-blue-500: #06b6d4;
+  --color-blue-600: #0891b2;
+}
+
+/* Carbon (Dark) - Forest-black backgrounds, emerald green accents */
+[data-theme="carbon"] {
+  --color-neutral-50: #e0f0e0;
+  --color-neutral-100: #c0d8c0;
+  --color-neutral-200: #98b898;
+  --color-neutral-300: #8aaa8a;
+  --color-neutral-400: #6a8a6a;
+  --color-neutral-500: #5a7a5a;
+  --color-neutral-600: #3a5a3a;
+  --color-neutral-700: #2a3f2a;
+  --color-neutral-800: #1a231a;
+  --color-neutral-900: #0f150f;
+  --color-neutral-950: #080c08;
+
+  --color-blue-400: #34d399;
+  --color-blue-500: #10b981;
+  --color-blue-600: #059669;
+}
+
+/* Themed scrollbar colors */
+[data-theme="frost"] *:hover,
+[data-theme="frost"] *:focus-visible,
+[data-theme="frost"] *:active {
+  scrollbar-color: rgba(15, 23, 42, 0.15) transparent;
+}
+[data-theme="frost"] *:hover::-webkit-scrollbar-thumb,
+[data-theme="frost"] *:focus-visible::-webkit-scrollbar-thumb,
+[data-theme="frost"] *:active::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.15);
+}
+
+[data-theme="dawn"] *:hover,
+[data-theme="dawn"] *:focus-visible,
+[data-theme="dawn"] *:active {
+  scrollbar-color: rgba(26, 21, 14, 0.15) transparent;
+}
+[data-theme="dawn"] *:hover::-webkit-scrollbar-thumb,
+[data-theme="dawn"] *:focus-visible::-webkit-scrollbar-thumb,
+[data-theme="dawn"] *:active::-webkit-scrollbar-thumb {
+  background-color: rgba(26, 21, 14, 0.15);
+}
+
+[data-theme="void"] *:hover,
+[data-theme="void"] *:focus-visible,
+[data-theme="void"] *:active {
+  scrollbar-color: rgba(200, 200, 255, 0.12) transparent;
+}
+[data-theme="void"] *:hover::-webkit-scrollbar-thumb,
+[data-theme="void"] *:focus-visible::-webkit-scrollbar-thumb,
+[data-theme="void"] *:active::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 200, 255, 0.12);
+}
+
+[data-theme="carbon"] *:hover,
+[data-theme="carbon"] *:focus-visible,
+[data-theme="carbon"] *:active {
+  scrollbar-color: rgba(200, 255, 200, 0.12) transparent;
+}
+[data-theme="carbon"] *:hover::-webkit-scrollbar-thumb,
+[data-theme="carbon"] *:focus-visible::-webkit-scrollbar-thumb,
+[data-theme="carbon"] *:active::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 255, 200, 0.12);
 }
